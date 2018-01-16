@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="processArticle_v2.ContextDialogController">
+   <children>
+      <VBox layoutX="58.0" layoutY="35.0" prefHeight="172.0" prefWidth="506.0">
+         <children>
+            <TextArea fx:id="textField" editable="false" maxWidth="507.0" prefHeight="206.0" prefWidth="506.0" scaleShape="false" wrapText="true">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TextArea>
+            <Text fx:id="textYear" strokeType="OUTSIDE" strokeWidth="10.0" textAlignment="RIGHT" wrappingWidth="506.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text fx:id="textFile" layoutX="10.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="10.0" textAlignment="RIGHT" wrappingWidth="506.0">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+         </children>
+      </VBox>
+      <Button fx:id="nextButton" layoutX="515.0" layoutY="231.0" mnemonicParsing="false" onAction="#nextButtonHandle" text="Далее">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="prevButton" layoutX="414.0" layoutY="231.0" mnemonicParsing="false" onAction="#prevButtonHandle" text="Назад">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Text fx:id="textCount" layoutX="25.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="22.13671875" />
+   </children>
+</AnchorPane>
