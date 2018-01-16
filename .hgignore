@@ -1,0 +1,4 @@
+syntax: glob
+Каталог статей АГА
+build
+dist
