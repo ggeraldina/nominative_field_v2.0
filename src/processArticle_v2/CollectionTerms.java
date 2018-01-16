@@ -141,7 +141,8 @@ public class CollectionTerms {
     public void calculateIndexBrightness(){
         int countContext = 0;
         for (FrequencyOccurrenceTerm fr : termsData){
-            countContext += fr.getContext().size();
+            if(fr.getContext() != null)
+                countContext += fr.getContext().size();
         }
         for (FrequencyOccurrenceTerm fr : termsData){
             int countFO = fr.getAllFrequencyOccurrence0();            

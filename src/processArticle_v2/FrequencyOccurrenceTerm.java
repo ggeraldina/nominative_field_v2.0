@@ -6,6 +6,7 @@
 package processArticle_v2;
 
 import java.util.ArrayList;
+import java.util.List;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -25,7 +26,10 @@ public class FrequencyOccurrenceTerm {
     private ArrayList<IntegerProperty> allFrequencyOccurrence;
     private ArrayList<IntegerProperty> frequencyOccurrenceNear;
     private ArrayList<IntegerProperty> frequencyOccurrenceThroughOne;
-    private ArrayList<Context> context;
+    private List<Context> context;
+    
+    //Считаем номер добавляемого контекста, иначе не умею)
+    private int countContext = -1;
     // индекс яркости = част. встречаем. / кол-во всех контекстов
     private final DoubleProperty indexBrightness;
     
@@ -140,8 +144,18 @@ public class FrequencyOccurrenceTerm {
     // все методы для поля context
     //
     public void setContext(int value) { allFrequencyOccurrence.get(1).set(value); }    
-    public ArrayList getContext() { return context; }
+    public List getContext() { return context; }
+    
     public void addContext(String context, String fileName) {
+        //Ищем существует ли такой контекст
+        for(Context c: this.context) {
+            //Если существует, увеличиваем ему счетчик слов
+            if(c.getContext().equals(context) && c.getFileName().equals(fileName)) {
+                this.context.get(countContext).upNumTerm();
+                return;
+            }
+        }
+        countContext++;
         this.context.add(new Context(context, fileName));
     }
     //

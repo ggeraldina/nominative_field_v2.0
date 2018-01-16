@@ -11,12 +11,15 @@ package processArticle_v2;
  */
 public class Context {
 
+    //TODO: Убрать дубли
     private String context;
     private String fileName;
+    private int numTerm;
 
     public Context(String context, String fileName) {
         this.context = context;
         this.fileName = fileName;
+        this.numTerm = 1;
     }
 
     public void setContext(String context) {
@@ -33,6 +36,11 @@ public class Context {
         return fileName;
     }
     
-   
+   public void upNumTerm() {
+        this.numTerm++;
+    }
+    public int getNumTerm() {
+        return numTerm;
+    }
     
 }
