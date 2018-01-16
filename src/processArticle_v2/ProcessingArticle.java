@@ -66,10 +66,11 @@ public class ProcessingArticle {
         for (File file : files) {
             if (file.isFile()) {
                 processDocument(file, flagSeriesArticles); // обработать файл из папки
-            } else {
-                 ArticlesController.showAlert("Ooops, there was an error!\n"
-                         + "You made a mistake when selecting a folder\n"
-                         + "No files found.");
+//            } else {
+////                 ArticlesController.showAlert("Ooops, there was an error!\n"
+////                         + "You made a mistake when selecting a folder\n"
+////                         + "No files found.");
+////                 return;
             }
         }
     }
@@ -99,10 +100,10 @@ public class ProcessingArticle {
                 readWordsNearby(paragraphCurrent, collectionTerms, flagSeriesArticles, fileName);
             }
         } catch (Exception ex) {
-            ArticlesController.showAlert("Ooops, there was an error!\n"
-                         + "problem accessing file " + file.getAbsolutePath());                
-            ex.printStackTrace();
-            System.out.println("problem accessing file " + file.getAbsolutePath());
+//            ArticlesController.showAlert("Ooops, there was an error!\n"
+//                         + "problem accessing file " + file.getAbsolutePath());                
+//            ex.printStackTrace();
+//            System.out.println("problem accessing file " + file.getAbsolutePath());
         }
     }
 
@@ -139,9 +140,9 @@ public class ProcessingArticle {
                 }
             }
         } catch (IOException e) {
-            ArticlesController.showAlert("Ooops, there was an error!\n"
-                         + "Input file " + path + " error"); 
-            System.out.println("Input file " + path + " error");
+//            ArticlesController.showAlert("Ooops, there was an error!\n"
+//                         + "Input file " + path + " error"); 
+//            System.out.println("Input file " + path + " error");
         }
     }
 
@@ -328,13 +329,13 @@ public class ProcessingArticle {
                         }
                     }
                 } catch (Exception ex) {
-                    ArticlesController.showAlert("Ooops, there was an error!\n"
-                         + "problem accessing file " + file.getAbsolutePath()); 
-                    ex.printStackTrace();
-                    System.out.println("problem accessing file " + file.getAbsolutePath());
+//                    ArticlesController.showAlert("Ooops, there was an error!\n"
+//                         + "problem accessing file " + file.getAbsolutePath()); 
+//                    ex.printStackTrace();
+//                    System.out.println("problem accessing file " + file.getAbsolutePath());
                 }
             } else {
-                ArticlesController.showAlert("You made a mistake when selecting a folder\nNo files found.");
+//                ArticlesController.showAlert("You made a mistake when selecting a folder\nNo files found.");
             }   
         }
         return collectionTerms.findTerm(term);
