@@ -142,7 +142,7 @@ public class CollectionTerms {
         int countContext = 0;
         for (FrequencyOccurrenceTerm fr : termsData){
             if(fr.getContext() != null)
-                countContext += fr.getContext().size();
+                countContext += fr.getAllFrequencyOccurrence0();
         }
         for (FrequencyOccurrenceTerm fr : termsData){
             int countFO = fr.getAllFrequencyOccurrence0();            

@@ -163,10 +163,10 @@ public class ArticlesController {
         for (FrequencyOccurrenceTerm term: listWords2) { 
             int frequencyOccurrence0 = term.getAllFrequencyOccurrence0();
             //int frequencyOccurrence1 = term.getAllFrequencyOccurrence1();
-            String frTerm = term.getTerm() 
-                    + "\n(near: " 
-                    + term.getFrequencyOccurrenceNear0() + ";\n[radius = 1]: " 
-                    + term.getFrequencyOccurrenceThroughOne0() + ")";
+            String frTerm = term.getTerm(); 
+//                    + "\n(near: " 
+//                    + term.getFrequencyOccurrenceNear0() + ";\n[radius = 1]: " 
+//                    + term.getFrequencyOccurrenceThroughOne0() + ")";
             XYChart.Data data0 = new XYChart.Data(frTerm, frequencyOccurrence0);
             //XYChart.Data data1 = new XYChart.Data(frTerm, frequencyOccurrence1);
             series0.getData().add(data0);
