@@ -11,7 +11,6 @@ package processArticle_v2;
  */
 public class Context {
 
-    //TODO: Убрать дубли
     private String context;
     private String fileName;
     private int numTerm;

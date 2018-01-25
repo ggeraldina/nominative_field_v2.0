@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -13,8 +17,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="borderPane" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1176.0" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="processArticle_v2.ArticlesController">
-    <top>
+<BorderPane fx:id="borderPane" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1176.0" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="processArticle_v2.ArticlesController">
+   <center>
         <AnchorPane prefHeight="700.0" prefWidth="1174.0" styleClass="background" stylesheets="@Theme.css" BorderPane.alignment="CENTER">
             <children>                
                 <MenuBar maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -63,7 +67,8 @@
             </TableView>
             <Button fx:id="addButton2" layoutX="848.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleAddButton2" prefHeight="37.0" prefWidth="173.0" text="Add left word" textAlignment="CENTER" textFill="#027c00" />
             <Button fx:id="deleteButton2" layoutX="1043.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleDeleteButton2" prefHeight="31.0" prefWidth="113.0" text="Delete" textFill="#d71010" />
+            <Button fx:id="showContextButton" layoutX="613.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleShowContextButton" prefHeight="41.0" prefWidth="154.0" text="Show context" />
             </children>
         </AnchorPane>
-    </top>
+   </center>
 </BorderPane>

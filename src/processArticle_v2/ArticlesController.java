@@ -51,10 +51,13 @@ public class ArticlesController {
 
     @FXML
     private Button deleteButton;
-    
+
+    @FXML
+    private Button showContextButton;
+
     @FXML
     private Button deleteButton2;
-    
+
     @FXML
     private Button addButton2;
 
@@ -78,7 +81,6 @@ public class ArticlesController {
 
 //    @FXML
 //    private TableColumn<FrequencyOccurrenceTerm, String> columnFO1;
-    
     @FXML
     private TableColumn<FrequencyOccurrenceTerm, String> columnIB0;
 
@@ -87,7 +89,7 @@ public class ArticlesController {
 
     @FXML
     private TableView<FrequencyOccurrenceTerm> tableWords2;
-    
+
     @FXML
     private TableColumn<FrequencyOccurrenceTerm, String> columnTerm_2;
 
@@ -96,13 +98,12 @@ public class ArticlesController {
 
 //    @FXML
 //    private TableColumn<FrequencyOccurrenceTerm, String> columnFO1_2;
-    
     @FXML
     private TableColumn<FrequencyOccurrenceTerm, String> columnIB0_2;
 
     @FXML
     private TableColumn<FrequencyOccurrenceTerm, Boolean> columnTermFromUsers_2;
-    
+
     // коллекция терминов
     private CollectionTerms collectionTerms = new CollectionTerms();
     // класс обработки файлов
@@ -110,7 +111,7 @@ public class ArticlesController {
     // для отображения контекста
     private FrequencyOccurrenceTerm rowData;
     // список выбранных слов
-    private ObservableList<FrequencyOccurrenceTerm> listWords2 
+    private ObservableList<FrequencyOccurrenceTerm> listWords2
             = FXCollections.observableArrayList();
 
     //
@@ -119,17 +120,17 @@ public class ArticlesController {
     public ArticlesController() {
     }
 
-    
-    public FrequencyOccurrenceTerm getRowData(){
+    public FrequencyOccurrenceTerm getRowData() {
         return rowData;
     }
+
     //
     // методы
     //    
     @FXML
     private void initialize() {
         xAxis.setLabel("");
-        yAxis.setLabel("Number");        
+        yAxis.setLabel("Number");
         // отображение контекста
         tableWords.setRowFactory(tv -> {
             TableRow<FrequencyOccurrenceTerm> row = new TableRow<>();
@@ -139,7 +140,7 @@ public class ArticlesController {
                     rowData = row.getItem();
                     try {
                         System.out.println(rowData);
-                        
+
                         new ContextDialog(rowData);
                     } catch (Exception e) {
                         System.out.println("Kek O.O" + e.getMessage());
@@ -154,16 +155,16 @@ public class ArticlesController {
     // показать диаграмму для термина
     private void showDiagramm() {
         barChart.getData().clear();
-        int j = 0;        
+        int j = 0;
         //barChart.setTitle(changedTerm.getTerm());
         XYChart.Series series0 = new XYChart.Series();
         //XYChart.Series series1 = new XYChart.Series();
         series0.setName(" The frequency of occurrence");
         //series1.setName(" Корпус 2");
-        for (FrequencyOccurrenceTerm term: listWords2) { 
+        for (FrequencyOccurrenceTerm term : listWords2) {
             int frequencyOccurrence0 = term.getAllFrequencyOccurrence0();
             //int frequencyOccurrence1 = term.getAllFrequencyOccurrence1();
-            String frTerm = term.getTerm(); 
+            String frTerm = term.getTerm();
 //                    + "\n(near: " 
 //                    + term.getFrequencyOccurrenceNear0() + ";\n[radius = 1]: " 
 //                    + term.getFrequencyOccurrenceThroughOne0() + ")";
@@ -180,7 +181,7 @@ public class ArticlesController {
         String flagSeriesArticles = "zero";
         // "очистка" коллекции
         collectionTerms = new CollectionTerms();
-        
+
         DirectoryChooser directChooser = new DirectoryChooser();
         File directoryRoot = directChooser.showDialog(null);
         if (directoryRoot.isDirectory()) {
@@ -189,7 +190,7 @@ public class ArticlesController {
         } else {
             showAlert("You made a mistake when selecting a folder\nNo files found.");
             return;
-        }       
+        }
         // удалить пользовательские и общеупотребительные слова из коллекции терминов
         article.deleteCommonWordsFromCollection(collectionTerms);
         collectionTerms.sort(flagSeriesArticles);
@@ -197,7 +198,7 @@ public class ArticlesController {
         collectionTerms.calculateIndexBrightness();
         createTable(); // создать таблицу
         tableWords.setItems(collectionTerms.getTermsData());
-        
+
         createTable2(); // создать таблицу 2
         tableWords2.setItems(listWords2);
     }
@@ -224,19 +225,17 @@ public class ArticlesController {
 //        createTable2(); // создать таблицу 2
 //        tableWords2.setItems(listWords2);
 //    }
-
     // создать таблицу
     private void createTable() {
         columnTerm.setCellValueFactory(new PropertyValueFactory("term"));
         columnFO0.setCellValueFactory(new PropertyValueFactory("allFrequencyOccurrence0"));
         // columnFO1.setCellValueFactory(new PropertyValueFactory("allFrequencyOccurrence1"));
-       
+
         columnIB0.setCellValueFactory(new PropertyValueFactory("indexBrightness"));
-        
+
         columnTermFromUsers.setCellValueFactory(new PropertyValueFactory("termFromUsers"));
         tableWords.getColumns().setAll(columnTerm, columnFO0/*, columnFO1*/, columnIB0, columnTermFromUsers);
     }
-
 
     @FXML
     private void handleDeleteButton(ActionEvent event) {
@@ -254,20 +253,32 @@ public class ArticlesController {
 
     @FXML
     private void handleFindAddButton(ActionEvent event) {
-        handleFindAdd();
+        //Так будет лучше для всех
+        String word = findAddTextField.getText();
+        handleFindAdd(word);
     }
 
-    private void handleFindAdd() {
-        String word = findAddTextField.getText();
+    private void handleFindAdd(String word) {
+        //TODO: Переделать метод, для перевернутого словосочетания) А лучше взять метод readWordsNearby...
         String[] collocation = word.split(" ");
+        String reverseWord = "";
+        if(collocation.length == 2) { //Удалить после TODO
+            reverseWord = collocation[1] + " " + collocation[0];
+        }
         if (collectionTerms.haveTerm(word)) {
             FrequencyOccurrenceTerm term = collectionTerms.findTerm(word);
             selectTermInTable(term);
         } else {
             FrequencyOccurrenceTerm term;
             term = article.findUserTerm(word, collectionTerms, "zero");
-            if(term == null){
+            if(!"".equals(reverseWord)) { //Удалить после TODO
+                    term = article.findUserTerm(reverseWord, collectionTerms, "zero");
+            }
+            if (term == null) {
                 term = article.findUserTerm(word, collectionTerms, "first");
+                if(!"".equals(reverseWord)) { //Удалить после TODO
+                    term = article.findUserTerm(reverseWord, collectionTerms, "first");
+                }
             }
             selectTermInTable(term);
             if (term != null) {
@@ -277,8 +288,7 @@ public class ArticlesController {
                 article.addWordInFile(pathAdd, word);
                 article.deleteWordInFile(pathDelete, word);
                 article.deleteWordInFile(pathDelete2, word);
-            } 
-            else {
+            } else {
                 showAlert("Not found!");
             }
         }
@@ -292,7 +302,7 @@ public class ArticlesController {
         tableWords.getFocusModel().focus(t, columnFO0);
         tableWords.scrollTo(t);
     }
-    
+
     // создать таблицу с выбранными словами
     private void createTable2() {
         columnTerm_2.setCellValueFactory(new PropertyValueFactory("term"));
@@ -304,6 +314,22 @@ public class ArticlesController {
     }
 
     @FXML
+    private void handleShowContextButton(ActionEvent event) {
+        if (tableWords2.getItems().size() != 2) {
+            showAlert("Для поиска контекста, число строк должно быть равно 2");
+        } else {
+            String items = tableWords2.getItems().get(0).getTerm() + " " + tableWords2.getItems().get(1).getTerm();
+            //String items2 = tableWords2.getItems().get(1).getTerm() + " " + tableWords2.getItems().get(0).getTerm();
+            handleFindAdd(items);
+            try {
+                new ContextDialog(tableWords.getSelectionModel().getSelectedItem());
+            } catch (Exception e) {
+                System.out.println("Kek O.O" + e.getMessage());
+            }
+        }
+    }
+
+    @FXML
     private void handleDeleteButton2(ActionEvent event) {
         int selectedIndex = tableWords2.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -312,8 +338,8 @@ public class ArticlesController {
         }
         showDiagramm();
     }
-    
-     @FXML
+
+    @FXML
     private void handleAddButton2(ActionEvent event) {
         int selectedIndex = tableWords.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
@@ -322,8 +348,7 @@ public class ArticlesController {
         }
         showDiagramm();
     }
-    
-    
+
     public static void showAlert(String text) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Information");

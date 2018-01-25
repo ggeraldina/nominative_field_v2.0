@@ -9,9 +9,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import java.util.ArrayList; 
-import java.util.LinkedHashSet; 
-import java.util.List; 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -67,15 +67,28 @@ public class ContextDialogController implements Initializable {
     //Найдем и выделим термин в контексте
     private void changeTextArea() {
         int start = 0, countTerm = 0;
+        boolean finded = false;
         textCount.setText(Integer.toString(count + 1));
         textField.setText(context.get(count).getContext());
-        for (String word : textField.getText().split("\\s")) {
-            if (termin.equals(word)) {
+        for (String word : textField.getText().split("[ \\s]")) {
+            String onlyWord = word.replaceAll("^?[“:‘\"*\\d\\s ,.?!•►]+$?", "");
+            if (termin.equals(onlyWord)) {
                 countTerm++;
                 start = context.get(count).getContext().indexOf(termin, start);
                 textField.replaceText(start, start + termin.length(), termin.toUpperCase());
                 textField.selectRange(start, start + termin.length());
-                if(countTerm >= context.get(count).getNumTerm()) {
+                if (countTerm >= context.get(count).getNumTerm()) {
+                    finded = true;
+                    break;
+                }
+            }
+            if ((termin.split("[ \\s]")).length == 2) {
+                countTerm++;
+                start = context.get(count).getContext().indexOf(termin, start);
+                textField.replaceText(start, start + termin.length(), termin.toUpperCase());
+                textField.selectRange(start, start + termin.length());
+                if (countTerm >= context.get(count).getNumTerm()) {
+                    finded = true;
                     break;
                 }
             }
@@ -87,8 +100,8 @@ public class ContextDialogController implements Initializable {
     }
 
     public void updateButton() {
-        prevButton.setDisable(count == 0 ? true : false);
-        nextButton.setDisable(count == (context.size() - 1) ? true : false);
+        prevButton.setDisable((count == 0));
+        nextButton.setDisable((count == (context.size() - 1)));
     }
 
     public void nextButtonHandle() {
