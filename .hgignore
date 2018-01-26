@@ -2,4 +2,6 @@ syntax: glob
 Каталог статей АГА
 build
 dist
+nbproject
 *.docx
+*.txt

@@ -17,6 +17,7 @@ import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 
 /**
  * класс для обработки одного элемента (файла/ коллекции/ абзаца)
+ *
  * @author Geraldina&Fennics
  */
 public class ProcessingArticle {
@@ -29,6 +30,7 @@ public class ProcessingArticle {
     private CollectionTerms collectionTerms;
     // для отладки
     boolean flag = false;
+
     // конструктор
     //
     // заполняет поля коллекциями: 
@@ -54,13 +56,11 @@ public class ProcessingArticle {
 
     }
 
-    
-
     /**
      * Считывает содержимое папки и обрабатывает каждый файл в ней
      *
      * @param flagSeriesArticles номер корпуса статей
-     */    
+     */
     public void readDirectory(String flagSeriesArticles) {
         File[] files = directory.listFiles();
         for (File file : files) {
@@ -105,6 +105,61 @@ public class ProcessingArticle {
 //            ex.printStackTrace();
 //            System.out.println("problem accessing file " + file.getAbsolutePath());
         }
+    }
+
+    /**
+     * Находит общий контекст для слов
+     *
+     * @param
+     */
+    public FrequencyOccurrenceTerm findContext(String word1, String word2) {
+        String phrase = word2 + " " + word1;
+        FrequencyOccurrenceTerm onlyForContext = new FrequencyOccurrenceTerm(phrase);
+        for (File file : directory.listFiles()) {
+            if (file.isFile()) {
+                try {
+                    // Open the file and read its contents into the XWPFDocument object
+                    XWPFDocument docxFile = new XWPFDocument(OPCPackage.open(file.getAbsolutePath()));
+                    // Processing sentences
+                    List<XWPFParagraph> paragraphs = docxFile.getParagraphs();
+                    String paragraphCurrent;
+                    // создать объект класса, помогающего обрабатывать статью
+                    //ProcessingArticle article = new ProcessingArticle();
+                    for (XWPFParagraph p : paragraphs) {
+                        paragraphCurrent = p.getText().toLowerCase();
+                        String[] sentences = paragraphCurrent.split("^?[.?!;]+[\\s]+$?");
+                        for (String sentence : sentences) {
+                            String[] words = sentence.trim().split("^'|\\s+'|'\\s+|'$|^?[“:\"* \\)\\(”\\d\\s,•►—&%$]+$?");
+                            for (int i = 0; i < words.length; i++) {
+                                if (word1.equalsIgnoreCase(words[i])) {
+                                    if (i != 0 && i != 1) {
+                                        if (words[i - 1].equalsIgnoreCase(word2) || words[i - 2].equalsIgnoreCase(word2)) {
+                                            addContextForTerm(onlyForContext, paragraphCurrent, file.getName());
+                                        }
+                                    } else {
+                                        if (i != 0 && (words[i - 1].equalsIgnoreCase(word2))) {
+                                            addContextForTerm(onlyForContext, paragraphCurrent, file.getName());
+                                        }
+                                    }
+                                    if (i != words.length - 1 && i != words.length - 2) {
+                                        if (words[i + 1].equalsIgnoreCase(word2) || words[i + 2].equalsIgnoreCase(word2)) {
+                                            addContextForTerm(onlyForContext, paragraphCurrent, file.getName());
+                                        }
+                                    } else {
+                                        if (i != words.length - 1 && words[i + 1].equalsIgnoreCase(word2)) {
+                                            addContextForTerm(onlyForContext, paragraphCurrent, file.getName());
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception ex) {
+                    System.out.println("problem accessing file " + file.getAbsolutePath());
+                }
+            }
+        }
+        return onlyForContext;
     }
 
     /**
@@ -187,12 +242,12 @@ public class ProcessingArticle {
      * @param paragraph - текущий обзац статьи
      * @param collectionTerms - коллекция терминов
      * @param flagSeriesArticles - номер корпуса статей
-     * @param fileName - имя файла  
+     * @param fileName - имя файла
      */
     public void readWordsNearby(String paragraph,
             CollectionTerms collectionTerms,
             String flagSeriesArticles,
-            String fileName) {        
+            String fileName) {
         String[] sentences = paragraph.split("^?[.?!;]+[\\s]+$?");
         for (String sentence : sentences) {
             sentence = sentence.trim();
@@ -204,9 +259,9 @@ public class ProcessingArticle {
 //                     flag = true;       
 //                    }                
                 if (sentence.contains(" " + s + " ")) {
-                    for (int i = 0; i < words.length; i++) {                        
+                    for (int i = 0; i < words.length; i++) {
                         if (s.equalsIgnoreCase(words[i])) {
-                            if ((i != 1) && (i != 0)) {                                
+                            if ((i != 1) && (i != 0)) {
                                 processWord(collectionTerms, words[i - 2], 1, flagSeriesArticles, sentence, fileName);
                                 processWord(collectionTerms, words[i - 1], 0, flagSeriesArticles, sentence, fileName);
                             } else {
@@ -237,7 +292,7 @@ public class ProcessingArticle {
      * @param paragraph - текущий обзац статьи
      * @param collectionTerms - коллекция терминов
      * @param flagSeriesArticles - номер корпуса статей
-     * @param fileName - имя файла    
+     * @param fileName - имя файла
      * @return обзац без пользовательских терминов
      */
     public String addUsersWords(
@@ -256,11 +311,11 @@ public class ProcessingArticle {
                     if (found == collocation.length) {
                         int wordFromUsers = -1; // -1 пользовательское слово                                         
                         processWord(collectionTerms, wordUsers, wordFromUsers, flagSeriesArticles, paragraph, fileName);
-                            if (words[i].equals(wordUsers)) {
-                                words[i] = "thisIsWord'sPlace";
-                            } else {
-                                words[i] = ".";
-                            }
+                        if (words[i].equals(wordUsers)) {
+                            words[i] = "thisIsWord'sPlace";
+                        } else {
+                            words[i] = ".";
+                        }
                         found = 0;
                     }
 
@@ -284,14 +339,14 @@ public class ProcessingArticle {
      * @param flagSeriesArticles - номер корпуса статей
      * @return термин как объкт типа FrequencyOccurrenceTerm
      */
-    public FrequencyOccurrenceTerm findUserTerm(String term, 
+    public FrequencyOccurrenceTerm findUserTerm(String term,
             CollectionTerms collectionTerms,
             String flagSeriesArticles) {
         //term = term.replaceAll(" +", " ");
         String[] collocation = term.split("[ +]");
         int found;
-        String textColloc = "";     
-        File[] files = directory.listFiles();        
+        String textColloc = "";
+        File[] files = directory.listFiles();
         for (File file : files) {
             if (file.isFile()) {
                 try {
@@ -336,7 +391,7 @@ public class ProcessingArticle {
                 }
             } else {
 //                ArticlesController.showAlert("You made a mistake when selecting a folder\nNo files found.");
-            }   
+            }
         }
         return collectionTerms.findTerm(term);
     }
@@ -346,14 +401,14 @@ public class ProcessingArticle {
      *
      * @param collectionTerms - коллекция терминов
      * @param term1 - термин
-     * @param distanceToTerm - расстояние до слова, 
-     *               если = -1, то это пользовательское слово (расстояния нет)
+     * @param distanceToTerm - расстояние до слова, если = -1, то это
+     * пользовательское слово (расстояния нет)
      * @param flagSeriesArticles - номер корпуса статей
      * @param paragraph - контекст
-     * @param fileName - имя файла     * 
+     * @param fileName - имя файла *
      */
     private void processWord(CollectionTerms collectionTerms,
-            String term1, 
+            String term1,
             int distanceToTerm,
             String flagSeriesArticles,
             String paragraph,
@@ -370,7 +425,7 @@ public class ProcessingArticle {
                 term = new FrequencyOccurrenceTerm(term1);
             }
             collectionTerms.addTerm(term);
-        }        
+        }
         switch (flagSeriesArticles) {
             case "zero":
                 switch (distanceToTerm) {
@@ -401,15 +456,27 @@ public class ProcessingArticle {
         collectionTerms.numberContextsIncrease();
     }
 
-     /**
+    //Я создаю кучу классных методов, чтобы решить интерееееееснейшую задачу) (нет)
+    private void addContextForTerm(FrequencyOccurrenceTerm termin,
+            String context,
+            String fileName) {
+        try {
+            termin.addContext(context, directory.getName() + ", " + fileName);
+        } catch (Exception ex) {
+            ArticlesController.showAlert("Ooops, there was an error!\n"
+                    + ex.getLocalizedMessage());
+        }
+    }
+
+    /**
      * добавить контекст
      *
      * @param collection - коллекция терминов
      * @param term - термин
      * @param context - контекст
-     * @param fileName - имя файла     * 
+     * @param fileName - имя файла *
      */
-    private void addContextWord(CollectionTerms collection, 
+    private void addContextWord(CollectionTerms collection,
             String term,
             String context,
             String fileName) {
@@ -418,7 +485,7 @@ public class ProcessingArticle {
             termin.addContext(context, directory.getName() + ", " + fileName);
         } catch (Exception ex) {
             ArticlesController.showAlert("Ooops, there was an error!\n"
-                         + ex.getLocalizedMessage());
+                    + ex.getLocalizedMessage());
         }
     }
 
@@ -436,7 +503,7 @@ public class ProcessingArticle {
             file.close();
         } catch (IOException ex) {
             ArticlesController.showAlert("Ooops, there was an error!\n"
-                         + ex.getLocalizedMessage());
+                    + ex.getLocalizedMessage());
         }
     }
 
@@ -470,7 +537,7 @@ public class ProcessingArticle {
             file.close();
         } catch (IOException ex) {
             ArticlesController.showAlert("Ooops, there was an error!\n"
-                         + ex.getLocalizedMessage() 
+                    + ex.getLocalizedMessage()
                     + "Output file " + path + " error");
         }
     }

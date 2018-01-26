@@ -70,29 +70,35 @@ public class ContextDialogController implements Initializable {
         boolean finded = false;
         textCount.setText(Integer.toString(count + 1));
         textField.setText(context.get(count).getContext());
-        for (String word : textField.getText().split("[ \\s]")) {
-            String onlyWord = word.replaceAll("^?[“:‘\"*\\d\\s ,.?!•►]+$?", "");
-            if (termin.equals(onlyWord)) {
-                countTerm++;
-                start = context.get(count).getContext().indexOf(termin, start);
-                textField.replaceText(start, start + termin.length(), termin.toUpperCase());
-                textField.selectRange(start, start + termin.length());
-                if (countTerm >= context.get(count).getNumTerm()) {
-                    finded = true;
-                    break;
+//        if ((termin.split("[ \\s]")).length == 2) {
+//            countTerm++;
+//            start = context.get(count).getContext().indexOf(termin, start);
+//            if (start == -1) {
+//                termin = termin.split(" ")[1] + " " + termin.split(" ")[0];
+//                start = context.get(count).getContext().indexOf(termin, start);
+//            }
+//            textField.replaceText(start, start + termin.length(), termin.toUpperCase());
+//            textField.selectRange(start, start + termin.length());
+//            if (countTerm >= context.get(count).getNumTerm()) {
+//                finded = true;
+//            }
+//        }
+        for (String term : termin.split("[ \\s]")) {
+            for (String word : textField.getText().split("[ \\s]")) {
+                String onlyWord = word.replaceAll("^?[“:‘\"*\\d\\s ,.?!•►]+$?", "");
+                if (term.equals(onlyWord)) {
+                    countTerm++;
+                    start = context.get(count).getContext().indexOf(term, start);
+                    textField.replaceText(start, start + term.length(), term.toUpperCase());
+                    textField.selectRange(start, start + term.length());
+                    if (countTerm >= context.get(count).getNumTerm()) {
+                        finded = true;
+                        break;
+                    }
                 }
+                start += word.length() + 1;
             }
-            if ((termin.split("[ \\s]")).length == 2) {
-                countTerm++;
-                start = context.get(count).getContext().indexOf(termin, start);
-                textField.replaceText(start, start + termin.length(), termin.toUpperCase());
-                textField.selectRange(start, start + termin.length());
-                if (countTerm >= context.get(count).getNumTerm()) {
-                    finded = true;
-                    break;
-                }
-            }
-            start += word.length() + 1;
+            start = 0;            
         };
         textFile.setText(context.get(count).getFileName());
         //Добавим кнопкам дизаблед, если нельзя нажать

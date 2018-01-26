@@ -318,11 +318,9 @@ public class ArticlesController {
         if (tableWords2.getItems().size() != 2) {
             showAlert("Для поиска контекста, число строк должно быть равно 2");
         } else {
-            String items = tableWords2.getItems().get(0).getTerm() + " " + tableWords2.getItems().get(1).getTerm();
-            //String items2 = tableWords2.getItems().get(1).getTerm() + " " + tableWords2.getItems().get(0).getTerm();
-            handleFindAdd(items);
+            FrequencyOccurrenceTerm context = article.findContext(tableWords2.getItems().get(0).getTerm(), tableWords2.getItems().get(1).getTerm());
             try {
-                new ContextDialog(tableWords.getSelectionModel().getSelectedItem());
+                new ContextDialog(context);
             } catch (Exception e) {
                 System.out.println("Kek O.O" + e.getMessage());
             }
