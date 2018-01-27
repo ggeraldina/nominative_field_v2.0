@@ -322,7 +322,8 @@ public class ArticlesController {
             try {
                 new ContextDialog(context);
             } catch (Exception e) {
-                System.out.println("Kek O.O" + e.getMessage());
+                showAlert("Not found!");
+                //System.out.println("Kek O.O" + e.getMessage());
             }
         }
     }

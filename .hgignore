@@ -5,3 +5,4 @@ dist
 nbproject
 *.docx
 *.txt
+build.xml
