@@ -63,14 +63,17 @@ public class ProcessingArticle {
      */
     public void readDirectory(String flagSeriesArticles) {
         File[] files = directory.listFiles();
-        for (File file : files) {
-            if (file.isFile()) {
-                processDocument(file, flagSeriesArticles); // обработать файл из папки
+        for (File direct : files) {
+            File[] dir = direct.listFiles();
+            for (File file : dir) {
+                if (file.isFile()) {
+                    processDocument(file, flagSeriesArticles); // обработать файл из папки
 //            } else {
 ////                 ArticlesController.showAlert("Ooops, there was an error!\n"
 ////                         + "You made a mistake when selecting a folder\n"
 ////                         + "No files found.");
 ////                 return;
+                }
             }
         }
     }

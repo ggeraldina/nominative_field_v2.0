@@ -178,6 +178,8 @@ public class ArticlesController {
 
     @FXML
     private void menuOpenAction0(ActionEvent event) {
+        long start = System.currentTimeMillis(); 
+        // поиск смысла жизни ... 
         String flagSeriesArticles = "zero";
         // "очистка" коллекции
         collectionTerms = new CollectionTerms();
@@ -201,6 +203,9 @@ public class ArticlesController {
 
         createTable2(); // создать таблицу 2
         tableWords2.setItems(listWords2);
+        long finish = System.currentTimeMillis(); 
+        long timeConsumedMillis = finish - start;
+        showAlert("Time of process: " + timeConsumedMillis);
     }
 
 //    @FXML
