@@ -21,7 +21,7 @@ public class ContextDialog {
     public ContextDialog(FrequencyOccurrenceTerm term) throws Exception {
         curTerm = term;
         Stage stage = new Stage();
-        stage.setTitle("Context");
+        stage.setTitle("The context");
         Parent root = FXMLLoader.load(getClass().getResource("ContextDialog2.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);

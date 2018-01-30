@@ -178,8 +178,6 @@ public class ArticlesController {
 
     @FXML
     private void menuOpenAction0(ActionEvent event) {
-        long start = System.currentTimeMillis();
-        // поиск смысла жизни ...
         String flagSeriesArticles = "zero";
         // "очистка" коллекции
         collectionTerms = new CollectionTerms();
@@ -203,9 +201,6 @@ public class ArticlesController {
 
         createTable2(); // создать таблицу 2
         tableWords2.setItems(listWords2);
-        long finish = System.currentTimeMillis();
-        long timeConsumedMillis = finish - start;
-        showAlert("Time of corp: " + timeConsumedMillis);
     }
 
 //    @FXML
@@ -264,14 +259,26 @@ public class ArticlesController {
     }
 
     private void handleFindAdd(String word) {
+        //TODO: Переделать метод, для перевернутого словосочетания) А лучше взять метод readWordsNearby...
+        String[] collocation = word.split(" ");
+        String reverseWord = "";
+        if(collocation.length == 2) { //Удалить после TODO
+            reverseWord = collocation[1] + " " + collocation[0];
+        }
         if (collectionTerms.haveTerm(word)) {
             FrequencyOccurrenceTerm term = collectionTerms.findTerm(word);
             selectTermInTable(term);
         } else {
             FrequencyOccurrenceTerm term;
             term = article.findUserTerm(word, collectionTerms, "zero");
+            if(!"".equals(reverseWord)) { //Удалить после TODO
+                    term = article.findUserTerm(reverseWord, collectionTerms, "zero");
+            }
             if (term == null) {
                 term = article.findUserTerm(word, collectionTerms, "first");
+                if(!"".equals(reverseWord)) { //Удалить после TODO
+                    term = article.findUserTerm(reverseWord, collectionTerms, "first");
+                }
             }
             selectTermInTable(term);
             if (term != null) {
@@ -281,7 +288,6 @@ public class ArticlesController {
                 article.addWordInFile(pathAdd, word);
                 article.deleteWordInFile(pathDelete, word);
                 article.deleteWordInFile(pathDelete2, word);
-                findAddTextField.setText("");
             } else {
                 showAlert("Not found!");
             }
@@ -316,8 +322,7 @@ public class ArticlesController {
             try {
                 new ContextDialog(context);
             } catch (Exception e) {
-                showAlert("Not found!");
-                //System.out.println("Kek O.O" + e.getMessage());
+                System.out.println("Kek O.O" + e.getMessage());
             }
         }
     }
