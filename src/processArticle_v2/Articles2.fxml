@@ -21,7 +21,7 @@
    <center>
         <AnchorPane prefHeight="700.0" prefWidth="1174.0" styleClass="background" stylesheets="@Theme.css" BorderPane.alignment="CENTER">
             <children>                
-                <MenuBar maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <MenuBar layoutY="5.0" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
@@ -39,15 +39,15 @@
                 <TableView fx:id="tableWords" layoutX="37.0" layoutY="139.0" prefHeight="463.0" prefWidth="553.0" AnchorPane.bottomAnchor="98.0" AnchorPane.leftAnchor="37.0" AnchorPane.topAnchor="139.0">
                     <columns>
                         <TableColumn fx:id="columnTerm" prefWidth="145.0" text="Term" />
-                        <TableColumn fx:id="columnFO0" prefWidth="147.0" text="The frequency&#10;of occurrence" />
+                        <TableColumn fx:id="columnFO0" prefWidth="147.0" text="Frequency&#10;of occurrence" />
                   <!--<TableColumn fx:id="columnFO1" prefWidth="113.0" text="Корпус 2" /> -->
-                  <TableColumn fx:id="columnIB0" prefWidth="136.0" text="The index&#10;of brightness" />
+                  <TableColumn fx:id="columnIB0" prefWidth="136.0" text="Index&#10;of brightness" />
                   <TableColumn fx:id="columnTermFromUsers" prefWidth="120.0" text="Term&#10;from users" />
                     </columns>
                 </TableView>
                 <TextField fx:id="findAddTextField" layoutX="37.0" layoutY="64.0" prefHeight="37.0" prefWidth="366.0" promptText="term..." />
                 <Button fx:id="findAddButton" layoutX="430.0" layoutY="64.0" mnemonicParsing="false" onAction="#handleFindAddButton" prefHeight="37.0" prefWidth="158.0" text="Find and add" textAlignment="CENTER" textFill="#027c00" />
-                <Button fx:id="deleteButton" layoutX="475.0" layoutY="626.0" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="31.0" prefWidth="113.0" text="Delete" textFill="#d71010" />
+                <Button fx:id="deleteButton" layoutX="475.0" layoutY="626.0" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="31.0" prefWidth="113.0" text="Delete" textFill="#d71010" AnchorPane.bottomAnchor="33.0" />
                 <BarChart fx:id="barChart" layoutX="604.0" layoutY="436.0" prefHeight="254.0" prefWidth="552.0">
                     <xAxis>
                         <CategoryAxis side="BOTTOM" fx:id="xAxis" />
@@ -59,9 +59,9 @@
             <TableView fx:id="tableWords2" layoutX="604.0" layoutY="139.0" prefHeight="201.0" prefWidth="553.0">
                <columns>
                   <TableColumn fx:id="columnTerm_2" prefWidth="145.0" text="Term" />
-                  <TableColumn fx:id="columnFO0_2" prefWidth="147.0" text="The frequency&#10;of occurrence" />
+                  <TableColumn fx:id="columnFO0_2" prefWidth="147.0" text="Frequency&#10;of occurrence" />
                   <!--<TableColumn fx:id="columnFO1_2" prefWidth="113.0" text="Корпус 2" />-->
-                  <TableColumn fx:id="columnIB0_2" prefWidth="136.0" text="The index&#10;of brightness" />
+                  <TableColumn fx:id="columnIB0_2" prefWidth="136.0" text="Index&#10;of brightness" />
                   <TableColumn fx:id="columnTermFromUsers_2" prefWidth="120.0" text="Term&#10;from users" />
                </columns>
             </TableView>
