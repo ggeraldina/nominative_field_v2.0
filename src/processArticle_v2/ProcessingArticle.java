@@ -62,9 +62,9 @@ public class ProcessingArticle {
      * @param flagSeriesArticles номер корпуса статей
      */
     public void readDirectory(String flagSeriesArticles) {
-        File[] files = directory.listFiles();
-        for (File direct : files) {
-            File[] dir = direct.listFiles();
+        //File[] files = directory.listFiles();
+        //for (File direct : files) {
+            File[] dir = directory.listFiles();
             for (File file : dir) {
                 if (file.isFile()) {
                     processDocument(file, flagSeriesArticles); // обработать файл из папки
@@ -75,7 +75,7 @@ public class ProcessingArticle {
 ////                 return;
                 }
             }
-        }
+        //}
     }
 
     /**

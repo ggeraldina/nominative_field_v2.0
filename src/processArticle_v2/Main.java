@@ -10,6 +10,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -22,7 +23,12 @@ public class Main extends Application {
      @Override
     public void start(Stage stage) throws Exception { 
         this.primaryStage = stage;
-        this.primaryStage.setTitle("Analysis of the articles");        
+        this.primaryStage.setTitle("Analysis of the articles");
+        // Устанавливаем иконку приложения.
+        Image img = new Image("file:icon.png");
+        stage.getIcons().add(img);
+
+        //this.primaryStage.getIcons().add(new Image("icon.png"));
         Parent root = FXMLLoader.load(getClass().getResource("Articles2.fxml"));        
         Scene scene = new Scene(root);        
         primaryStage.setScene(scene);       

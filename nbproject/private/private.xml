@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/zolot/Desktop/ProcessArticles_v2/src/processArticle_v2/ProcessingArticle.java</file>
-            <file>file:/C:/Users/zolot/Desktop/ProcessArticles_v2/src/processArticle_v2/Main.java</file>
-            <file>file:/C:/Users/zolot/Desktop/ProcessArticles_v2/src/processArticle_v2/ArticlesController.java</file>
-            <file>file:/C:/Users/zolot/Desktop/ProcessArticles_v2/src/processArticle_v2/ContextDialogController.java</file>
+            <file>file:/C:/Users/Geraldina/Documents/NetBeansProjects/ProcessArticles_v2/src/processArticle_v2/CollectionTerms.java</file>
+            <file>file:/C:/Users/Geraldina/Documents/NetBeansProjects/ProcessArticles_v2/src/processArticle_v2/ProcessingArticle.java</file>
+            <file>file:/C:/Users/Geraldina/Documents/NetBeansProjects/ProcessArticles_v2/src/processArticle_v2/FrequencyOccurrenceTerm.java</file>
+            <file>file:/C:/Users/Geraldina/Documents/NetBeansProjects/ProcessArticles_v2/src/processArticle_v2/Articles2.fxml</file>
+            <file>file:/C:/Users/Geraldina/Documents/NetBeansProjects/ProcessArticles_v2/src/processArticle_v2/Main.java</file>
+            <file>file:/C:/Users/Geraldina/Documents/NetBeansProjects/ProcessArticles_v2/src/processArticle_v2/Theme.css</file>
+            <file>file:/C:/Users/Geraldina/Documents/NetBeansProjects/ProcessArticles_v2/src/processArticle_v2/Articles1.fxml</file>
+            <file>file:/C:/Users/Geraldina/Documents/NetBeansProjects/ProcessArticles_v2/src/processArticle_v2/ArticlesController.java</file>
+            <file>file:/C:/Users/Geraldina/Documents/NetBeansProjects/ProcessArticles_v2/src/processArticle_v2/Context.java</file>
         </group>
     </open-files>
 </project-private>
