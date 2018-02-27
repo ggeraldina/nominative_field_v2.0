@@ -205,7 +205,7 @@ public class ArticlesController {
         tableWords2.setItems(listWords2);
         long finish = System.currentTimeMillis(); 
         long timeConsumedMillis = finish - start;
-        showAlert("Time of process: " + timeConsumedMillis);
+        showAlert("Time of process: " + timeConsumedMillis + " ms");
     }
 
 //    @FXML
@@ -321,7 +321,7 @@ public class ArticlesController {
     @FXML
     private void handleShowContextButton(ActionEvent event) {
         if (tableWords2.getItems().size() != 2) {
-            showAlert("Для поиска контекста, число строк должно быть равно 2");
+            showAlert("To find the context, the number of rows must be 2");
         } else {
             FrequencyOccurrenceTerm context = article.findContext(tableWords2.getItems().get(0).getTerm(), tableWords2.getItems().get(1).getTerm());
             try {
@@ -353,7 +353,7 @@ public class ArticlesController {
     }
 
     public static void showAlert(String text) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information");
         alert.setHeaderText(null);
         alert.setContentText(text);

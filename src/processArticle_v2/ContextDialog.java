@@ -8,6 +8,7 @@ package processArticle_v2;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -21,7 +22,10 @@ public class ContextDialog {
     public ContextDialog(FrequencyOccurrenceTerm term) throws Exception {
         curTerm = term;
         Stage stage = new Stage();
-        stage.setTitle("The context");
+        stage.setTitle("Context");
+        // Устанавливаем иконку приложения.
+        Image img = new Image("file:icon.png");
+        stage.getIcons().add(img);
         Parent root = FXMLLoader.load(getClass().getResource("ContextDialog2.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
