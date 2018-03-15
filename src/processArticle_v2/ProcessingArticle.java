@@ -505,10 +505,15 @@ public class ProcessingArticle {
      */
     public void addWordInFile(String path, String word) {
         try {
-            FileWriter file = new FileWriter(path, true);
-            file.append(word + "\n");
-            file.flush();
-            file.close();
+            // true - запись в конец файла
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(path, true), "UTF-8"));
+            try {
+                out.append(word + "\n");
+            } finally {
+                out.flush();
+                out.close();
+            }
         } catch (IOException ex) {
             ArticlesController.showAlert("Ooops, there was an error!\n"
                     + ex.getLocalizedMessage());
@@ -539,42 +544,15 @@ public class ProcessingArticle {
             System.out.println("Input file " + path + " error");
         }
         try {
-            
-//            {   // Вариант записи кодировки "cp1251" (Windows)
-//                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "cp1251"));
-//                out.append(text);
-//                out.close();
-//            }
-//            {   // Вариант записи кодировки "UTF-8"
-//                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path), "UTF-8"));
-//                out.append(text);
-//                out.close();
-//            }
-            
-//            // не работает import
-//            File f = new File(path); 
-//            FileUtils fu = FileUtils.writeStringToFile(f, text, "UTF-8");  
-            
-//            PrintWriter out = new java.io.PrintWriter(new java.io.File(path), "UTF-8");
-//            out.print(text);
-//            out.flush();
-//            out.close();
-            
-//            OutputStreamWriter file = new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8);
-           
-            Writer out = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream(path), "UTF-8"));
+            // true - перезапись файла
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(path, false), "UTF-8"));
             try {
-                out.write(text);
+                out.append(text);
             } finally {
+                out.flush();
                 out.close();
             }
-            
-//            //  было
-//            FileWriter file = new FileWriter(path, false);
-//            file.write(text);
-//            file.flush();
-//            file.close();
         } catch (IOException ex) {
             ArticlesController.showAlert("Ooops, there was an error!\n"
                     + ex.getLocalizedMessage()
