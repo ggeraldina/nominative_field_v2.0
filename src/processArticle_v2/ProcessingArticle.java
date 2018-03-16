@@ -9,10 +9,8 @@ package processArticle_v2;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -102,8 +100,10 @@ public class ProcessingArticle {
             //ProcessingArticle article = new ProcessingArticle();
             for (XWPFParagraph p : paragraphs) {
                 paragraphCurrent = p.getText().toLowerCase();
+                System.out.println(paragraphCurrent);
                 // добавить пользовательские слова в коллекцию и удалить их из абзаца после
                 paragraphCurrent = addUsersWords(paragraphCurrent, collectionTerms, flagSeriesArticles, fileName);
+                System.out.println(paragraphCurrent);
                 // прочитать и выбрать из абзаца нужные термины
                 readWordsNearby(paragraphCurrent, collectionTerms, flagSeriesArticles, fileName);
             }
@@ -131,13 +131,11 @@ public class ProcessingArticle {
                     // Processing sentences
                     List<XWPFParagraph> paragraphs = docxFile.getParagraphs();
                     String paragraphCurrent;
-                    // создать объект класса, помогающего обрабатывать статью
-                    //ProcessingArticle article = new ProcessingArticle();
                     for (XWPFParagraph p : paragraphs) {
                         paragraphCurrent = p.getText().toLowerCase();
-                        String[] sentences = paragraphCurrent.split("^?[.?!;]+[\\s]+$?");
+                        String[] sentences = paragraphCurrent.split("[.?!\n]+");//("^?[.?!;]+[\\s]+$?");
                         for (String sentence : sentences) {
-                            String[] words = sentence.trim().split("^'|\\s+'|'\\s+|'$|^?[“:\"* \\)\\(”\\d\\s,•►—&%$]+$?");
+                            String[] words = sentence.trim().split("\\s+");//("^'|\\s+'|'\\s+|'$|^?[“:\"* \\)\\(”\\d\\s,•►—&%$]+$?");
                             for (int i = 0; i < words.length; i++) {
                                 if (word1.equalsIgnoreCase(words[i])) {
                                     if (i != 0 && i != 1) {
@@ -256,10 +254,12 @@ public class ProcessingArticle {
             CollectionTerms collectionTerms,
             String flagSeriesArticles,
             String fileName) {
-        String[] sentences = paragraph.split("^?[.?!;]+[\\s]+$?");
+        String[] sentences = paragraph.split("[.?!\n]+");//("^?[.?!;]+[\\s]+$?");
         for (String sentence : sentences) {
             sentence = sentence.trim();
-            String[] words = sentence.split("^'|\\s+'|'\\s+|'$|^?[“:\"* \\)\\(”\\d\\s,•►—&%$]+$?");
+            System.out.println(sentence);                        
+        
+            String[] words = sentence.split("\\s+");//("^'|\\s+'|'\\s+|'$|^?[“:\"* \\)\\(”\\d\\s,•►—&%$]+$?");
             for (String s : synonymsMigrant) {
 //                    if(!flag){
 //                    ArticlesController.showAlert("Добавил\n"
@@ -296,6 +296,8 @@ public class ProcessingArticle {
     /**
      * Добавляет в collectionTerms пользовательские термины и удаляет их из
      * обзаца
+     * 
+     * Удаляет запятые и другие символы из абзаца
      *
      * @param paragraph - текущий обзац статьи
      * @param collectionTerms - коллекция терминов
@@ -309,7 +311,7 @@ public class ProcessingArticle {
             String flagSeriesArticles,
             String fileName) {
         String paragraphNew = "";
-        String[] words = paragraph.split("^?[“:\"*\\d\\s,•►]+$?");
+        String[] words = paragraph.split("^?[“:―:«–—―»\"*\\d\\s,•►-]+$?");
         int found = 0;
         for (String wordUsers : usersWordsAdd) {
             String[] collocation = wordUsers.split(" ");
