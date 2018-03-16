@@ -24,7 +24,7 @@ public class ContextDialog {
         Stage stage = new Stage();
         stage.setTitle("Context");
         // Устанавливаем иконку приложения.
-        Image img = new Image("file:icon.png");
+        Image img = new Image("file:res/icon.png");
         stage.getIcons().add(img);
         Parent root = FXMLLoader.load(getClass().getResource("ContextDialog2.fxml"));
         Scene scene = new Scene(root);

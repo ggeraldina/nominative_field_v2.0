@@ -49,13 +49,13 @@ public class ProcessingArticle {
 
     ProcessingArticle() {
         synonymsMigrant = new ArrayList<>();
-        update(1, "Synonyms for the word.txt");
+        update(1, "res/Synonyms for the word.txt");
         mostCommonWords = new ArrayList<>();
-        update(2, "Most common words.txt");
+        update(2, "res/Most common words.txt");
         usersWordsDelete = new ArrayList<>();
-        update(3, "Users words to delete.txt");
+        update(3, "res/Users words to delete.txt");
         usersWordsAdd = new ArrayList<>();
-        update(4, "Users words to add.txt");
+        update(4, "res/Users words to add.txt");
 
     }
 

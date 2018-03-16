@@ -247,8 +247,8 @@ public class ArticlesController {
         int selectedIndex = tableWords.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             FrequencyOccurrenceTerm newFrequency = tableWords.getItems().get(selectedIndex);
-            String pathAdd = "Users words to delete.txt";
-            String pathDelete = "Users words to add.txt";
+            String pathAdd = "res/Users words to delete.txt";
+            String pathDelete = "res/Users words to add.txt";
             String word = newFrequency.getTerm();
             article.addWordInFile(pathAdd, word);
             article.deleteWordInFile(pathDelete, word);
@@ -287,9 +287,9 @@ public class ArticlesController {
             }
             selectTermInTable(term);
             if (term != null) {
-                String pathDelete = "Users words to delete.txt";
-                String pathDelete2 = "Most common words.txt";
-                String pathAdd = "Users words to add.txt";
+                String pathDelete = "res/Users words to delete.txt";
+                String pathDelete2 = "res/Most common words.txt";
+                String pathAdd = "res/Users words to add.txt";
                 article.addWordInFile(pathAdd, word);
                 article.deleteWordInFile(pathDelete, word);
                 article.deleteWordInFile(pathDelete2, word);
