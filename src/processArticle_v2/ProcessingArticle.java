@@ -137,16 +137,18 @@ public class ProcessingArticle {
                         for (String sentence : sentences) {
                             String[] words = sentence.trim().split("\\s+");//("^'|\\s+'|'\\s+|'$|^?[“:\"* \\)\\(”\\d\\s,•►—&%$]+$?");
                             for (int i = 0; i < words.length; i++) {
-                                if (word1.equalsIgnoreCase(words[i])) {
-                                    if (i != 0 && i != 1) {
+                                if (word1.equalsIgnoreCase(words[i])) { //Если нашли первое слово
+                                    //Проверяем встречается ли слово2 перед словом1
+                                    if (i != 0 && i != 1) { 
                                         if (words[i - 1].equalsIgnoreCase(word2) || words[i - 2].equalsIgnoreCase(word2)) {
                                             addContextForTerm(onlyForContext, paragraphCurrent, file.getName());
                                         }
-                                    } else {
+                                    } else { 
                                         if (i != 0 && (words[i - 1].equalsIgnoreCase(word2))) {
                                             addContextForTerm(onlyForContext, paragraphCurrent, file.getName());
                                         }
                                     }
+                                    //Проверяем встречается ли после слова1
                                     if (i != words.length - 1 && i != words.length - 2) {
                                         if (words[i + 1].equalsIgnoreCase(word2) || words[i + 2].equalsIgnoreCase(word2)) {
                                             addContextForTerm(onlyForContext, paragraphCurrent, file.getName());
@@ -366,9 +368,10 @@ public class ProcessingArticle {
                     for (XWPFParagraph p : paragraphs) {
                         paragraphCurrent = p.getText().toLowerCase();
                         String[] words = paragraphCurrent.split("^?[“:‘\"*\\d\\s ,.?!•►]+$?");
-                        found = 0;
+                        found = 0; //Количество найденных слов в словосочетании
                         for (int j = 0; j < words.length; j++) {
                             if (collocation.length == 1) {
+                                //Обрабатываем как одно слово
                                 if (words[j].equals(term)) {
                                     int wordFromUsers = -1; // -1 пользовательское слово
                                     processWord(collectionTerms, term, wordFromUsers, flagSeriesArticles, paragraphCurrent, file.getName());
@@ -376,13 +379,15 @@ public class ProcessingArticle {
                                 }
 
                             } else {
-
+                                //Если следующее слово совпадает со словом словосочетания
                                 if (words[j].equals(collocation[found])) {
                                     textColloc += words[j] + " ";
                                     found++;
                                 } else {
+                                    //Если не совпало, то обнуляем и начинаем поиск заново
                                     found = 0;
                                 }
+                                //если нашли все словосочетание, добавляем
                                 if (found == collocation.length) {
                                     int wordFromUsers = -1; // -1 пользовательское слово
                                     processWord(collectionTerms, term, wordFromUsers, flagSeriesArticles, paragraphCurrent, file.getName());
