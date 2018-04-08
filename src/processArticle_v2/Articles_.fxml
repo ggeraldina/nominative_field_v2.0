@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -17,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="borderPane" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1176.0" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="processArticle_v2.ArticlesController">
+<BorderPane fx:id="borderPane" maxWidth="-Infinity" prefHeight="700.0" prefWidth="1176.0" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="processArticle_v2.ArticlesController">
    <center>
         <AnchorPane prefHeight="700.0" prefWidth="1174.0" styleClass="background" stylesheets="@Theme.css" BorderPane.alignment="CENTER">
             <children>                
@@ -48,7 +44,7 @@
                 <TextField fx:id="findAddTextField" layoutX="37.0" layoutY="64.0" prefHeight="37.0" prefWidth="366.0" promptText="term..." />
                 <Button fx:id="findAddButton" layoutX="430.0" layoutY="64.0" mnemonicParsing="false" onAction="#handleFindAddButton" prefHeight="37.0" prefWidth="158.0" text="Find and add" textAlignment="CENTER" textFill="#027c00" />
                 <Button fx:id="deleteButton" layoutX="475.0" layoutY="626.0" mnemonicParsing="false" onAction="#handleDeleteButton" prefHeight="31.0" prefWidth="113.0" text="Delete" textFill="#d71010" AnchorPane.bottomAnchor="33.0" />
-                <BarChart fx:id="barChart" layoutX="604.0" layoutY="436.0" prefHeight="254.0" prefWidth="552.0">
+                <BarChart fx:id="barChart" layoutX="604.0" layoutY="436.0" prefHeight="254.0" prefWidth="552.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="436.0">
                     <xAxis>
                         <CategoryAxis side="BOTTOM" fx:id="xAxis" />
                     </xAxis>
@@ -56,7 +52,7 @@
                         <NumberAxis fx:id="yAxis" side="LEFT" />
                     </yAxis>
                 </BarChart>
-            <TableView fx:id="tableWords2" layoutX="604.0" layoutY="139.0" prefHeight="201.0" prefWidth="553.0">
+            <TableView fx:id="tableWords2" layoutX="604.0" layoutY="139.0" prefHeight="201.0" prefWidth="553.0" AnchorPane.topAnchor="139.0">
                <columns>
                   <TableColumn fx:id="columnTerm_2" prefWidth="145.0" text="Term" />
                   <TableColumn fx:id="columnFO0_2" prefWidth="147.0" text="Frequency&#10;of occurrence" />
@@ -65,9 +61,9 @@
                   <TableColumn fx:id="columnTermFromUsers_2" prefWidth="120.0" text="Term&#10;from users" />
                </columns>
             </TableView>
-            <Button fx:id="addButton2" layoutX="848.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleAddButton2" prefHeight="37.0" prefWidth="173.0" text="Add left word" textAlignment="CENTER" textFill="#027c00" />
-            <Button fx:id="deleteButton2" layoutX="1043.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleDeleteButton2" prefHeight="31.0" prefWidth="113.0" text="Delete" textFill="#d71010" />
-            <Button fx:id="showContextButton" layoutX="613.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleShowContextButton" prefHeight="41.0" prefWidth="154.0" text="Show context" />
+            <Button fx:id="addButton2" layoutX="848.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleAddButton2" prefHeight="37.0" prefWidth="173.0" text="Add left word" textAlignment="CENTER" textFill="#027c00" AnchorPane.topAnchor="362.0" />
+            <Button fx:id="deleteButton2" layoutX="1043.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleDeleteButton2" prefHeight="31.0" prefWidth="113.0" text="Delete" textFill="#d71010" AnchorPane.topAnchor="362.0" />
+            <Button fx:id="showContextButton" layoutX="613.0" layoutY="362.0" mnemonicParsing="false" onAction="#handleShowContextButton" prefHeight="41.0" prefWidth="154.0" text="Show context" AnchorPane.topAnchor="362.0" />
             </children>
         </AnchorPane>
    </center>
