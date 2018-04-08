@@ -27,7 +27,7 @@ public class Main extends Application {
         // Устанавливаем иконку приложения.
         Image img = new Image("file:res/icon.png");
         stage.getIcons().add(img);
-        Parent root = FXMLLoader.load(getClass().getResource("Articles2.fxml"));        
+        Parent root = FXMLLoader.load(getClass().getResource("Articles_.fxml"));        
         Scene scene = new Scene(root);        
         primaryStage.setScene(scene);       
         primaryStage.show();

@@ -256,21 +256,22 @@ public class ProcessingArticle {
             CollectionTerms collectionTerms,
             String flagSeriesArticles,
             String fileName) {
-        String[] sentences = paragraph.split("[.?!\n]+");//("^?[.?!;]+[\\s]+$?");
+        String[] sentences = paragraph.split("[.?!…\n]+");//("^?[.?!;]+[\\s]+$?");
         for (String sentence : sentences) {
             sentence = sentence.trim();
             System.out.println(sentence);                        
         
-            String[] words = sentence.split("\\s+");//("^'|\\s+'|'\\s+|'$|^?[“:\"* \\)\\(”\\d\\s,•►—&%$]+$?");
+            String[] words = sentence.split("[      \\s)(]+");//("^'|\\s+'|'\\s+|'$|^?[“:\"* \\)\\(”\\d\\s,•►—&%$]+$?");
             for (String s : synonymsMigrant) {
 //                    if(!flag){
 //                    ArticlesController.showAlert("Добавил\n"
 //                               + words[0]);
 //                     flag = true;       
 //                    }                
-                if (sentence.contains(" " + s + " ")) {
+//                if (sentence.contains(" " + s + " ")) {
                     for (int i = 0; i < words.length; i++) {
-                        if (s.equalsIgnoreCase(words[i])) {
+                        String w = words[i].replaceAll("[  .]", "");
+                        if (s.equalsIgnoreCase(w)) {
                             if ((i != 1) && (i != 0)) {
                                 processWord(collectionTerms, words[i - 2], 1, flagSeriesArticles, sentence, fileName);
                                 processWord(collectionTerms, words[i - 1], 0, flagSeriesArticles, sentence, fileName);
@@ -289,7 +290,7 @@ public class ProcessingArticle {
                                 }
                             }
                         }
-                    }
+//                    }
                 }
             }
         }

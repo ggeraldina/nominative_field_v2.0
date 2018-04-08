@@ -253,6 +253,8 @@ public class ArticlesController {
             article.addWordInFile(pathAdd, word);
             article.deleteWordInFile(pathDelete, word);
             collectionTerms.deleteTerm(newFrequency);
+            // рассчитать индекс яркости
+            collectionTerms.calculateIndexBrightness();
         }
     }
 
@@ -261,6 +263,8 @@ public class ArticlesController {
         //Так будет лучше для всех
         String word = findAddTextField.getText();
         handleFindAdd(word);
+        // рассчитать индекс яркости
+        collectionTerms.calculateIndexBrightness();
     }
 
     private void handleFindAdd(String word) {
