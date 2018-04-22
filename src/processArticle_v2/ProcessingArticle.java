@@ -102,10 +102,10 @@ public class ProcessingArticle {
                 paragraphCurrent = p.getText().toLowerCase();
                 System.out.println(paragraphCurrent);
                 // добавить пользовательские слова в коллекцию и удалить их из абзаца после
-                paragraphCurrent = addUsersWords(paragraphCurrent, collectionTerms, flagSeriesArticles, fileName);
+                paragraphCurrent = addUsersWords(paragraphCurrent, p.getText(), collectionTerms, flagSeriesArticles, fileName);
                 System.out.println(paragraphCurrent);
                 // прочитать и выбрать из абзаца нужные термины
-                readWordsNearby(paragraphCurrent, collectionTerms, flagSeriesArticles, fileName);
+                readWordsNearby(paragraphCurrent, p.getText(), collectionTerms, flagSeriesArticles, fileName);
             }
         } catch (Exception ex) {
 //            ArticlesController.showAlert("Ooops, there was an error!\n"
@@ -253,6 +253,7 @@ public class ProcessingArticle {
      * @param fileName - имя файла
      */
     public void readWordsNearby(String paragraph,
+            String origP,
             CollectionTerms collectionTerms,
             String flagSeriesArticles,
             String fileName) {
@@ -273,20 +274,20 @@ public class ProcessingArticle {
                         String w = words[i].replaceAll("[  .]", "");
                         if (s.equalsIgnoreCase(w)) {
                             if ((i != 1) && (i != 0)) {
-                                processWord(collectionTerms, words[i - 2], 1, flagSeriesArticles, sentence, fileName);
-                                processWord(collectionTerms, words[i - 1], 0, flagSeriesArticles, sentence, fileName);
+                                processWord(collectionTerms, words[i - 2], 1, flagSeriesArticles, sentence, origP, fileName);
+                                processWord(collectionTerms, words[i - 1], 0, flagSeriesArticles, sentence, origP, fileName);
                             } else {
                                 if (i != 0) {
-                                    processWord(collectionTerms, words[i - 1], 0, flagSeriesArticles, sentence, fileName);
+                                    processWord(collectionTerms, words[i - 1], 0, flagSeriesArticles, sentence, origP, fileName);
                                 }
                             }
                             if ((i != words.length - 1)
                                     && (i != words.length - 2)) {
-                                processWord(collectionTerms, words[i + 1], 0, flagSeriesArticles, sentence, fileName);
-                                processWord(collectionTerms, words[i + 2], 1, flagSeriesArticles, sentence, fileName);
+                                processWord(collectionTerms, words[i + 1], 0, flagSeriesArticles, sentence, origP, fileName);
+                                processWord(collectionTerms, words[i + 2], 1, flagSeriesArticles, sentence, origP, fileName);
                             } else {
                                 if (i != words.length - 1) {
-                                    processWord(collectionTerms, words[i + 1], 0, flagSeriesArticles, sentence, fileName);
+                                    processWord(collectionTerms, words[i + 1], 0, flagSeriesArticles, sentence, origP, fileName);
                                 }
                             }
                         }
@@ -310,6 +311,7 @@ public class ProcessingArticle {
      */
     public String addUsersWords(
             String paragraph,
+            String origP,
             CollectionTerms collectionTerms,
             String flagSeriesArticles,
             String fileName) {
@@ -323,7 +325,7 @@ public class ProcessingArticle {
                     found++;
                     if (found == collocation.length) {
                         int wordFromUsers = -1; // -1 пользовательское слово                                         
-                        processWord(collectionTerms, wordUsers, wordFromUsers, flagSeriesArticles, paragraph, fileName);
+                        processWord(collectionTerms, wordUsers, wordFromUsers, flagSeriesArticles, paragraph, origP, fileName);
                         if (words[i].equals(wordUsers)) {
                             words[i] = "thisIsWord'sPlace";
                         } else {
@@ -375,7 +377,7 @@ public class ProcessingArticle {
                                 //Обрабатываем как одно слово
                                 if (words[j].equals(term)) {
                                     int wordFromUsers = -1; // -1 пользовательское слово
-                                    processWord(collectionTerms, term, wordFromUsers, flagSeriesArticles, paragraphCurrent, file.getName());
+                                    processWord(collectionTerms, term, wordFromUsers, flagSeriesArticles, paragraphCurrent, p.getText(), file.getName());
                                     words[j] = "";
                                 }
 
@@ -391,7 +393,7 @@ public class ProcessingArticle {
                                 //если нашли все словосочетание, добавляем
                                 if (found == collocation.length) {
                                     int wordFromUsers = -1; // -1 пользовательское слово
-                                    processWord(collectionTerms, term, wordFromUsers, flagSeriesArticles, paragraphCurrent, file.getName());
+                                    processWord(collectionTerms, term, wordFromUsers, flagSeriesArticles, paragraphCurrent, p.getText(), file.getName());
                                     //words[j] = "";
                                     textColloc = "";
                                     found = 0;
@@ -428,6 +430,7 @@ public class ProcessingArticle {
             int distanceToTerm,
             String flagSeriesArticles,
             String paragraph,
+            String abzac,
             String fileName) {
         term1 = term1.replaceAll(" +", " ");
         //String[] collocation = term1.split(" ");
@@ -468,7 +471,7 @@ public class ProcessingArticle {
                 term.allFrequencyOccurrenceIncrease1();
                 break;
         }
-        addContextWord(collectionTerms, term1, paragraph, fileName);
+        addContextWord(collectionTerms, term1, abzac, fileName);
         collectionTerms.numberContextsIncrease();
     }
 

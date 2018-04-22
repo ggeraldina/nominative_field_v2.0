@@ -67,7 +67,7 @@ public class ContextDialogController implements Initializable {
     //Найдем и выделим термин в контексте
     private void changeTextArea() {
         int start = 0, countTerm = 0;
-        boolean finded = false;
+        boolean found = false;
         textCount.setText(Integer.toString(count + 1));
         textField.setText(context.get(count).getContext());
 //        if ((termin.split("[ \\s]")).length == 2) {
@@ -85,22 +85,26 @@ public class ContextDialogController implements Initializable {
 //        }
         for (String term : termin.split("[ \\s]")) {
             for (String word : textField.getText().split("[ \\s]")) {
-                String onlyWord = word.replaceAll("^?[“:‘\"*\\d\\s ,.?!•►]+$?", "");
+                String onlyWord = word.replaceAll("^?[“:‘\"*\\d\\s ,.?!•►-]+$?", "");
+                //start = textField.getText().indexOf(onlyWord, start);
+                onlyWord = onlyWord.toLowerCase();
                 if (term.equals(onlyWord)) {
                     countTerm++;
-                    start = context.get(count).getContext().indexOf(term, start);
+                    start = context.get(count).getContext().toLowerCase().indexOf(term, start);
                     textField.replaceText(start, start + term.length(), term.toUpperCase());
                     textField.selectRange(start, start + term.length());
                     if (countTerm >= context.get(count).getNumTerm()) {
-                        finded = true;
+                        found = true;
                         break;
                     }
                 }
-                start += word.length() + 1;
+                //Страшное условие. Если во фразе слово начинается с символа и т.д. не прибавляем этот символ к длине слова
+                //использовать длину term нельзя, т.к. после слова могут стоять знаки.
+                start += word.length() - ((!word.toLowerCase().contains(onlyWord)) ? 0:  word.toLowerCase().indexOf(onlyWord)) + 1;
             }
-            start = 0;            
+            start = 0;
         };
-        textFile.setText(context.get(count).getFileName());
+        textFile.setText(context.get(count).getFileName() + "\n\nIn this context the term was repeated: " + context.get(count).getNumTerm());
         //Добавим кнопкам дизаблед, если нельзя нажать
         updateButton();
     }
